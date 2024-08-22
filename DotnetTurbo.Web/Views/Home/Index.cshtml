@@ -1,0 +1,15 @@
+﻿@model DotnetTurbo.Web.Controllers.ControllerModel
+
+<div class="is-flex is-justify-content-center mt-6">
+  <article class="panel is-info" style="width: 800px">
+    <p class="panel-heading">Todo List</p>
+
+    <div class="panel-block">
+      <div class="block m-auto">
+        @Html.Partial("_TodoForm", Model.Todo)
+      </div>
+    </div>
+
+    @Html.Partial("_TodoList", Model.Todos)
+  </article>
+</div>

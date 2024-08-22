@@ -1,0 +1,17 @@
+@model DotnetTurbo.Web.Models.TodoModel
+
+<div id="new-todo-form">
+    <form method="post"  asp-controller="Home" asp-action="AddTodo" data-turbo-stream>
+        <div class="field is-grouped">
+            <div class="control is-expanded">
+                <input asp-for="Content" class="input is-info" autocomplete="off"  placeholder="New todo" />
+
+            </div>
+            <div class="control">
+                <button class="button is-primary has-text-light">ADD</button>
+            </div>
+        </div>
+        <span asp-validation-for="Content" class="text-danger"></span>
+        <span id="message"></span>
+    </form>
+</div>

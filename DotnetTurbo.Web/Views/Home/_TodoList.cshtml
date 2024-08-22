@@ -1,0 +1,19 @@
+@model IList<DotnetTurbo.Web.Models.TodoModel>
+
+<div id="todo-list">
+  @foreach (var todo in Model)
+  {
+    <div  class="panel-block">
+      <a asp-controller="Home" asp-action="ToggleTodo" asp-route-id="@todo.ID" data-turbo-stream class="is-flex-grow-1">
+        <label class="checkbox">
+          <input type="checkbox" checked="@todo.Done" />
+          @todo.Content
+        </label>
+      </a>
+
+      <a asp-controller="Home" asp-action="RemoveTodo" asp-route-id="@todo.ID" data-turbo-stream class="button">
+        Delete
+      </a>
+    </div>
+  }
+<div>
