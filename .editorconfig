@@ -11,6 +11,9 @@ indent_size = 2
 # C# files
 [*.cs]
 
+# Make any unused using directives explicit error
+dotnet_diagnostic.IDE0005.severity = error
+
 #### Core EditorConfig Options ####
 
 # Indentation and spacing

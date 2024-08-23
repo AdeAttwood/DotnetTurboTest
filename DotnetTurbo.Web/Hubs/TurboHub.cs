@@ -1,6 +1,3 @@
-using DotnetTurbo.Web.Turbo;
-
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
 namespace DotnetTurbo.Web.Hubs;
