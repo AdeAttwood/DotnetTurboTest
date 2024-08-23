@@ -6,10 +6,10 @@
 
     <div class="panel-block">
       <div class="block m-auto">
-        @Html.Partial("_TodoForm", Model.Todo)
+        <partial name="_TodoForm" model="@Model.Todo" />
       </div>
     </div>
 
-    @Html.Partial("_TodoList", Model.Todos)
+    <partial name="_TodoList" model="@Model.Todos" />
   </article>
 </div>
