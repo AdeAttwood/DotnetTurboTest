@@ -1,3 +1,5 @@
+using DotnetTurbo.Web.Hubs;
+
 using Fluid.MvcViewEngine;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddMvc().AddFluid();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -23,6 +26,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapHub<TurboHub>("/turbohub");
 
 app.MapControllerRoute(
     name: "default",

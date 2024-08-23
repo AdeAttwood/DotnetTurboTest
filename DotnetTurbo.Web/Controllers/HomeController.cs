@@ -1,7 +1,11 @@
 using System.Diagnostics;
+
+using DotnetTurbo.Web.Hubs;
 using DotnetTurbo.Web.Models;
 using DotnetTurbo.Web.Turbo;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace DotnetTurbo.Web.Controllers;
 
@@ -12,7 +16,10 @@ public class ControllerModel
     public IList<TodoModel> Todos { get; set; } = new List<TodoModel>();
 }
 
-public class HomeController : Controller
+public class HomeController(
+    ILogger<HomeController> logger,
+    IHubContext<TurboHub, ITurboHub> hubContext
+    ) : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
@@ -32,7 +39,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddTodo(TodoModel model)
+    public async Task<IActionResult> AddTodo(TodoModel model)
     {
         if (!ModelState.IsValid)
             return TurboStream.Update("new-todo-form", PartialView("_TodoForm", model));
@@ -40,13 +47,18 @@ public class HomeController : Controller
         _todos.Add(model);
         this.ModelState.Clear();
 
+        var updateResult = TurboStream.Update("todo-list", PartialView("_TodoList", _todos));
+        await _hubContext.Clients.All.TurboStream(
+            await updateResult.RenderToString(ControllerContext)
+        );
+
         return new TurboStreamResults(
             TurboStream.Update("todo-list", PartialView("_TodoList", _todos)),
             TurboStream.Update("new-todo-form", PartialView("_TodoForm", new TodoModel()))
         );
     }
 
-    public IActionResult ToggleTodo(string id)
+    public async Task<IActionResult> ToggleTodo(string id)
     {
         foreach (var todo in _todos)
         {
@@ -57,12 +69,23 @@ public class HomeController : Controller
             }
         }
 
+        var updateResult = TurboStream.Update("todo-list", PartialView("_TodoList", _todos));
+        await _hubContext.Clients.All.TurboStream(
+            await updateResult.RenderToString(ControllerContext)
+        );
+
         return TurboStream.Update("todo-list", PartialView("_TodoList", _todos));
     }
 
-    public IActionResult RemoveTodo(string id)
+    public async Task<IActionResult> RemoveTodo(string id)
     {
         _todos.RemoveAll(todo => todo.ID == id);
+
+        var updateResult = TurboStream.Update("todo-list", PartialView("_TodoList", _todos));
+        await _hubContext.Clients.All.TurboStream(
+            await updateResult.RenderToString(ControllerContext)
+        );
+
         return TurboStream.Update("todo-list", PartialView("_TodoList", _todos));
     }
 

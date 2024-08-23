@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "@microsoft/signalr@8.0.7",
+      "destination": "wwwroot/lib/signalr",
+      "files": [
+        "dist/browser/signalr.js"
+      ]
+    },
+    {
+      "library": "@hotwired/turbo@8.0.5",
+      "destination": "wwwroot/lib/turbo",
+      "files": [
+        "dist/turbo.es2017-umd.js"
+      ]
+    },
+    {
+      "library": "bulma@1.0.2",
+      "destination": "wwwroot/lib/bulma",
+      "files": [
+        "css/bulma.css"
+      ]
+    }
+  ]
+}
