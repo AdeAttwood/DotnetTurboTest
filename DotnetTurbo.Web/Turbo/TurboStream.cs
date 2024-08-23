@@ -45,9 +45,10 @@ public class TurboStream
         var viewData = new ViewDataDictionary(
             new EmptyModelMetadataProvider(),
             partialView.ViewData.ModelState
-        );
-
-        viewData.Model = partialView.Model;
+        )
+        {
+            Model = partialView.Model
+        };
 
         return new TurboStreamPartialViewResult
         {

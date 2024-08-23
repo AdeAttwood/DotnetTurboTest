@@ -1,19 +1,15 @@
 using System.Text;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace DotnetTurbo.Web.Turbo;
 
-public class TurboStreamResults : IActionResult, ITurboStreamResult
+public class TurboStreamResults(params ITurboStreamResult[] results) : IActionResult, ITurboStreamResult
 {
     private const string TurboStreamContentType = "text/vnd.turbo-stream.html";
 
-    public ITurboStreamResult[] Results { get; }
-
-    public TurboStreamResults(params ITurboStreamResult[] results)
-    {
-        Results = results;
-    }
+    public ITurboStreamResult[] Results { get; } = results;
 
     public async Task<string> RenderToString(ActionContext context)
     {

@@ -21,17 +21,13 @@ public class HomeController(
     IHubContext<TurboHub, ITurboHub> hubContext
     ) : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<HomeController> _logger = logger;
+    private readonly IHubContext<TurboHub, ITurboHub> _hubContext = hubContext;
 
     /// <summary>
     /// This is a simple in-memory storage for demonstration purposes.
     /// </summary>
-    private static List<TodoModel> _todos = new();
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
+    private static readonly List<TodoModel> _todos = [];
 
     public IActionResult Index()
     {
